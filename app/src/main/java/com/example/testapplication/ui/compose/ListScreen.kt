@@ -62,7 +62,7 @@ fun ItemListScreen(imageList: List<ListImage>) {
 
 @Composable
 @Preview(showBackground = true)
-fun previewListScreen() {
+fun PeviewListScreen() {
 	val mutableState = remember { mutableStateOf(ListScreenState.Success(preivewItemList)) }
 	ListScreen(mutableState)
 }
@@ -70,7 +70,7 @@ fun previewListScreen() {
 
 @Composable
 @Preview(showBackground = true)
-fun previewListScreenLoading() {
+fun PreviewListScreenLoading() {
 	val mutableState = remember { mutableStateOf(ListScreenState.Loading) }
 	ListScreen(mutableState)
 }
