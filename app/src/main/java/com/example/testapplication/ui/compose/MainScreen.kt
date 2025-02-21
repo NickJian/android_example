@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,21 +34,20 @@ import com.example.testapplication.R
 
 @Composable
 @Preview(showBackground = true)
-fun MainScreen(@PreviewParameter(PaddingProvider::class) innerPadding: PaddingValues) {
+fun MainScreen() {
 	var text by remember { mutableStateOf("Sample text") }
 	var visible by rememberSaveable { mutableStateOf(false) }
 
 	Column(
 		Modifier
 			.verticalScroll(rememberScrollState())
-			.padding(10.dp)
+//			.padding(innerPadding)
 	) {
 
 
 		Text(
 			text = "click to show more text",
 			modifier = Modifier
-				.padding(innerPadding)
 				.clickable { visible = !visible },
 			fontSize = 20.sp,
 		)

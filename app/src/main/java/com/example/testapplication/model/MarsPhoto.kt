@@ -1,5 +1,8 @@
 package com.example.testapplication.model
 
-data class MarsPhoto {
+import com.google.gson.annotations.SerializedName
 
-}
+data class MarsPhoto(
+	@SerializedName("id") val id: String,
+	@SerializedName("img_src") val image: String,
+)

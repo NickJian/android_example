@@ -28,7 +28,7 @@ import com.example.testapplication.R
 
 @Composable
 @Preview(showBackground = true)
-fun BoxLayout(@PreviewParameter(PaddingProvider::class) innerPadding: PaddingValues) {
+fun BoxLayout() {
 
 	var image = remember { mutableStateOf<Any>(R.drawable.ic_launcher_background) }
 
