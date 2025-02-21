@@ -13,7 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.testapplication.main.viewmodel.MainViewModel
-import com.example.testapplication.ui.compose.MainActivityCompose
+import com.example.testapplication.ui.navigation.NavigationStack
 import com.example.testapplication.ui.theme.TestApplicationTheme
 import kotlinx.coroutines.launch
 
@@ -28,10 +28,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TestApplicationTheme {
-                MainActivityCompose(
-                    { state -> mainViewModel.updateState(state) },
-                    mainViewModel.state
-                )
+                NavigationStack()
+//                MainActivityScreen(
+//                    { state -> mainViewModel.updateState(state) },
+//                    mainViewModel.state
+//                )
             }
         }
 
