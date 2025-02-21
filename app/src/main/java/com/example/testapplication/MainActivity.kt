@@ -15,8 +15,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.testapplication.main.viewmodel.MainViewModel
 import com.example.testapplication.ui.navigation.NavigationStack
 import com.example.testapplication.ui.theme.TestApplicationTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     val mainViewModel: MainViewModel by viewModels()
