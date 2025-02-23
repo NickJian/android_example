@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testapplication.repository.LoadPhotoResult
 import com.example.testapplication.repository.PhotoListRepository
-import com.example.testapplication.ui.model.ListImage
 import com.example.testapplication.ui.model.ListScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -41,13 +40,7 @@ class ListViewModel @Inject constructor(val photoListRepository: PhotoListReposi
 		val result = withContext(Dispatchers.IO) { photoListRepository.getPhotoList() }
 		_listScreenState.value = when (result) {
 			is LoadPhotoResult.Success ->
-				ListScreenState.Success(result.photos.map {
-					ListImage(
-						id = it.id,
-						imgSrc = it.image
-					)
-				})
-
+				ListScreenState.Success(result.photos)
 			is LoadPhotoResult.Error -> ListScreenState.Failed(result.message)
 		}
 

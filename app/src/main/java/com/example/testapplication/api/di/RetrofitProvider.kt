@@ -1,6 +1,6 @@
-package com.example.testapplication.di
+package com.example.testapplication.api.di
 
-import com.example.testapplication.api.mars.MarsPhotoRemoteSource
+import com.example.testapplication.api.pokemon.PokemonDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,11 +15,11 @@ import javax.inject.Inject
 class RetrofitModule @Inject constructor() {
 
 	@Provides
-	fun getRetrofit(): MarsPhotoRemoteSource {
+	fun getRetrofit(): PokemonDataSource {
 		return Retrofit.Builder()
-			.baseUrl("https://android-kotlin-fun-mars-server.appspot.com/")
+			.baseUrl("https://pokeapi.co/api/v2/")
 			.addConverterFactory(GsonConverterFactory.create())
 			.build()
-			.create(MarsPhotoRemoteSource::class.java)
+			.create(PokemonDataSource::class.java)
 	}
 }

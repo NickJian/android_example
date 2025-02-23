@@ -19,8 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.testapplication.ui.model.ListImage
 import com.example.testapplication.ui.model.ListScreenState
+import com.example.testapplication.ui.model.PokemonListItemData
 
 @Composable
 fun ListScreen(state: State<ListScreenState>) {
@@ -35,28 +35,35 @@ fun ListScreen(state: State<ListScreenState>) {
 }
 
 @Composable
-fun ItemListScreen(imageList: List<ListImage>) {
+fun ItemListScreen(imageList: List<PokemonListItemData>) {
 	LazyColumn(
 		modifier = Modifier
 
 			.fillMaxWidth()
 	) {
 		items(imageList.size, key = { index -> imageList[index].id }) { idx ->
-			Card(modifier = Modifier.padding(3.dp)) {
-				Column(modifier = Modifier.padding(10.dp)) {
-					val imageData = imageList[idx]
+			ListItemCard(imageList, idx)
+		}
+	}
+}
 
-					Text("item ${imageData.id}")
+@Composable
+private fun ListItemCard(
+	imageList: List<PokemonListItemData>,
+	idx: Int
+) {
+	Card(modifier = Modifier.padding(3.dp)) {
+		Column(modifier = Modifier.padding(10.dp)) {
+			val imageData = imageList[idx]
 
-					AsyncImage(
-						modifier = Modifier
-							.padding(top = 10.dp)
-							.background(Color.Red),
-						model = imageData.imgSrc,
-						contentDescription = imageData.id,
-					)
-				}
-			}
+			Text("item ${imageData.name}")
+			AsyncImage(
+				modifier = Modifier
+					.padding(top = 10.dp)
+					.background(Color.Red),
+				model = imageData.image,
+				contentDescription = imageData.id,
+			)
 		}
 	}
 }
@@ -79,17 +86,20 @@ fun PreviewListScreenLoading() {
 
 
 private val preivewItemList = listOf(
-	ListImage(
+	PokemonListItemData(
 		id = "id1",
-		imgSrc = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000ML0044630840405181E02_DXXX.jpg"
+		name = "name1",
+		image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
 	),
-	ListImage(
+	PokemonListItemData(
 		id = "id2",
-		imgSrc = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044630840503644E01_DXXX.jpg"
+		name = "name2",
+		image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
 	),
-	ListImage(
+	PokemonListItemData(
 		id = "id3",
-		imgSrc = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044630830503643E02_DXXX.jpg"
+		name = "name3",
+		image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
 	)
 )
 
