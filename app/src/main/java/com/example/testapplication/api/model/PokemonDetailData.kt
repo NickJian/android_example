@@ -3,7 +3,9 @@ package com.example.testapplication.api.model
 import com.google.gson.annotations.SerializedName
 
 data class PokemonDetailData(
-	// todo placeholder, need to update
 	@SerializedName("name") val id: String,
-	@SerializedName("url") val url: String,
+	@SerializedName("height") val height: String,
+	@SerializedName("weight") val weight: String,
+	@SerializedName("front_shiny") val front: String,
+	@SerializedName("back_shiny") val back: String,
 )
