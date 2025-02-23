@@ -7,5 +7,4 @@ import retrofit2.http.GET
 interface MarsPhotoRemoteSource {
 	@GET("photos")
 	fun getPhotos(): Call<List<MarsPhoto>>
-
 }
