@@ -1,9 +1,14 @@
 package com.example.testapplication.repository
 
 import com.example.testapplication.model.MarsPhoto
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 class PhotoListRepositoryImpl @Inject constructor() : PhotoListRepository {
+
 	override suspend fun getPhotoList(): LoadPhotoResult {
 		return LoadPhotoResult.Success(sampleData)
 	}
@@ -47,4 +52,14 @@ sealed class LoadPhotoResult {
 	class Success(val photos: List<MarsPhoto>) : LoadPhotoResult()
 	class Error(val message: String) : LoadPhotoResult()
 }
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class PhotoListRepositoryModule {
+
+	@Binds
+	abstract fun bindPhotoListRepository(impl: PhotoListRepositoryImpl): PhotoListRepository
+}
+
+
 
