@@ -1,5 +1,6 @@
 package com.example.testapplication.ui.compose
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,8 +25,9 @@ import com.example.testapplication.ui.model.ListScreenState
 @Composable
 fun ListScreen(state: State<ListScreenState>) {
 	Box(Modifier.statusBarsPadding()) {
+		Log.d("listScreen", "recompose ${state.value}")
 		when (val screenState = state.value) {
-			is ListScreenState.Failed -> Text(screenState.message)
+			is ListScreenState.Failed -> Text("Error" + screenState.message)
 			is ListScreenState.Loading -> Text("loading")
 			is ListScreenState.Success -> ItemListScreen(screenState.imageList)
 		}

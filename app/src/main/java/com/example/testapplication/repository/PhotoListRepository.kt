@@ -1,5 +1,6 @@
 package com.example.testapplication.repository
 
+import com.example.testapplication.api.mars.MarsPhotoRemoteSource
 import com.example.testapplication.model.MarsPhoto
 import dagger.Binds
 import dagger.Module
@@ -7,41 +8,24 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
-class PhotoListRepositoryImpl @Inject constructor() : PhotoListRepository {
+class PhotoListRepositoryImpl @Inject constructor(val remoteSource: MarsPhotoRemoteSource) :
+	PhotoListRepository {
 
 	override suspend fun getPhotoList(): LoadPhotoResult {
-		return LoadPhotoResult.Success(sampleData)
-	}
-
-	companion object {
-		val sampleData = listOf(
-			MarsPhoto(
-				id = "id1",
-				image = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000ML0044630840405181E02_DXXX.jpg"
-			),
-			MarsPhoto(
-				id = "id2",
-				image = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044630840503644E01_DXXX.jpg"
-			),
-			MarsPhoto(
-				id = "id3",
-				image = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044630830503643E02_DXXX.jpg"
-			),
-			MarsPhoto(
-				id = "id4",
-				image = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000ML0044630840405181E02_DXXX.jpg"
-			),
-			MarsPhoto(
-				id = "id5",
-				image = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044630840503644E01_DXXX.jpg"
-			),
-			MarsPhoto(
-				id = "id6",
-				image = "https://mars.jpl.nasa.gov/msl-raw-images/msss/01000/mcam/1000MR0044630830503643E02_DXXX.jpg"
-			)
-		)
+		try {
+			val result = remoteSource.getPhotos().execute()
+			if (result.isSuccessful && result.body() != null) {
+				return LoadPhotoResult.Success(result.body()!!)
+			} else {
+				return LoadPhotoResult.Error("Server error")
+			}
+		} catch (e: Exception) {
+			return LoadPhotoResult.Error(e.message.toString())
+		}
 
 	}
+
+
 }
 
 interface PhotoListRepository {
