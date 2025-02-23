@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.testapplication.main.viewmodel.ListViewModel
+import com.example.testapplication.main.viewmodel.TestViewModel
 import com.example.testapplication.ui.compose.BoxLayout
 import com.example.testapplication.ui.compose.ListScreen
 import com.example.testapplication.ui.compose.MainScreen
@@ -28,7 +29,8 @@ fun NavigationStack() {
 			ListScreen(viewModel.listScreenState.collectAsState())
 		}
 		composable(NavigationScreen.BoxLayout.route) {
-			BoxLayout() // todo add NavController
+			val viewModel = hiltViewModel<TestViewModel>()
+			BoxLayout(navigationController)
 		}
 
 	}

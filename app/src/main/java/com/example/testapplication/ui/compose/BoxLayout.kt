@@ -3,7 +3,6 @@ package com.example.testapplication.ui.compose
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,14 +20,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.testapplication.R
 
 @Composable
-@Preview(showBackground = true)
-fun BoxLayout() {
+fun BoxLayout(navigationController: NavHostController) {
 
 	var image = remember { mutableStateOf<Any>(R.drawable.ic_launcher_background) }
 
@@ -73,7 +72,7 @@ fun BoxLayout() {
 }
 
 @Composable
-fun ConstraintLayout(modifier: Modifier, content: () -> Unit) {
-
+@Preview(showBackground = true)
+fun PreviewBoxLayout() {
+	BoxLayout(rememberNavController())
 }
-
