@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewModel @Inject constructor(val photoListRepository: PhotoListRepository) :
 	ViewModel() {
-		
+
 	private val _listScreenState = MutableStateFlow<ListScreenState>(ListScreenState.Loading)
 	val listScreenState = _listScreenState.asStateFlow()
 
@@ -43,7 +43,5 @@ class ListViewModel @Inject constructor(val photoListRepository: PhotoListReposi
 			is LoadPhotoResult.Error -> ListScreenState.Failed(result.message)
 		}
 	}
-
-
 
 }

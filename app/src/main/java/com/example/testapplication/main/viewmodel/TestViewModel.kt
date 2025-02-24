@@ -9,10 +9,8 @@ class TestViewModel @Inject constructor() : ViewModel() {
 		Log.d("TestViewModel", "init")
 	}
 
-
 	override fun onCleared() {
 		super.onCleared()
 		Log.d("TestViewModel", "onclear")
 	}
-
 }

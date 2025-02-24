@@ -15,6 +15,6 @@ interface PokemonDataSource {
 
 	@GET("pokemon/{id}")
 	suspend fun getPokemonDetails(
-		@Path("id") id: Int,
+		@Path("id") id: String,
 	): PokemonDetailData
 }

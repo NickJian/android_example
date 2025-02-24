@@ -1,7 +1,7 @@
 package com.example.testapplication.ui.compose
 
 import android.util.Log
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,52 +15,55 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.testapplication.ui.model.ListScreenState
 import com.example.testapplication.ui.model.PokemonListItemData
+import com.example.testapplication.ui.navigation.NavigationScreen
 
 @Composable
-fun ListScreen(state: State<ListScreenState>) {
+fun PokemonListScreen(state: State<ListScreenState>, navController: NavController) {
 	Box(Modifier.statusBarsPadding()) {
 		Log.d("listScreen", "recompose ${state.value}")
 		when (val screenState = state.value) {
 			is ListScreenState.Failed -> Text("Error" + screenState.message)
 			is ListScreenState.Loading -> Text("loading")
-			is ListScreenState.Success -> ItemListScreen(screenState.imageList)
+			is ListScreenState.Success -> ItemListScreen(navController, screenState.imageList)
 		}
 	}
 }
 
 @Composable
-fun ItemListScreen(imageList: List<PokemonListItemData>) {
+fun ItemListScreen(navController: NavController, imageList: List<PokemonListItemData>) {
 	LazyColumn(
 		modifier = Modifier
-
 			.fillMaxWidth()
 	) {
 		items(imageList.size, key = { index -> imageList[index].id }) { idx ->
-			ListItemCard(imageList, idx)
+			ListItemCard(navController, imageList, idx)
 		}
 	}
 }
 
 @Composable
 private fun ListItemCard(
+	navController: NavController,
 	imageList: List<PokemonListItemData>,
 	idx: Int
 ) {
-	Card(modifier = Modifier.padding(3.dp)) {
+	Card(modifier = Modifier
+		.padding(3.dp)
+		.clickable { navController.navigate(NavigationScreen.PokemonDetail.createRoute(imageList[idx].id)) }) {
 		Column(modifier = Modifier.padding(10.dp)) {
 			val imageData = imageList[idx]
 
-			Text("item ${imageData.name}")
+			Text("${imageData.id} ${imageData.name}")
 			AsyncImage(
 				modifier = Modifier
-					.padding(top = 10.dp)
-					.background(Color.Red),
+					.padding(top = 10.dp),
 				model = imageData.image,
 				contentDescription = imageData.id,
 			)
@@ -68,22 +71,19 @@ private fun ListItemCard(
 	}
 }
 
-
 @Composable
 @Preview(showBackground = true)
 fun PeviewListScreen() {
 	val mutableState = remember { mutableStateOf(ListScreenState.Success(preivewItemList)) }
-	ListScreen(mutableState)
+	PokemonListScreen(mutableState, rememberNavController())
 }
-
 
 @Composable
 @Preview(showBackground = true)
 fun PreviewListScreenLoading() {
 	val mutableState = remember { mutableStateOf(ListScreenState.Loading) }
-	ListScreen(mutableState)
+	PokemonListScreen(mutableState, rememberNavController())
 }
-
 
 private val preivewItemList = listOf(
 	PokemonListItemData(

@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.testapplication.main.viewmodel.MainState
-import com.example.testapplication.ui.model.ListImage
 import com.example.testapplication.ui.navigation.NavigationScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,7 +51,7 @@ fun MainScreen(
 				IconButton(onClick = { }) {
 					Icon(Icons.Default.Home, contentDescription = "Home")
 				}
-				IconButton(onClick = { navController.navigate(NavigationScreen.ListPage.route) }) {
+				IconButton(onClick = { navController.navigate(NavigationScreen.PokemonListPage.route) }) {
 					Icon(Icons.Default.Favorite, contentDescription = "List")
 				}
 				IconButton(onClick = { navController.navigate(NavigationScreen.BoxLayout.route) }) {
