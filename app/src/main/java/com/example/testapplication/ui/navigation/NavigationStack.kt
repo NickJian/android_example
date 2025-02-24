@@ -36,7 +36,11 @@ fun NavigationStack() {
 				viewModel.getListViewDetail()
 			}
 			PokemonListScreen(
-				navController = navigationController,
+				onItemClick = { id ->
+					navigationController.navigate(
+						NavigationScreen.PokemonDetail.createRoute(id)
+					)
+				},
 				state = viewModel.listScreenState.collectAsState()
 			)
 		}
