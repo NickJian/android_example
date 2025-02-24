@@ -15,7 +15,6 @@ import com.example.testapplication.ui.compose.BoxLayout
 import com.example.testapplication.ui.compose.MainScreen
 import com.example.testapplication.ui.compose.PokemonDetailScreen
 import com.example.testapplication.ui.compose.PokemonListScreen
-import com.example.testapplication.ui.navigation.NavigationScreen.Companion.param_id
 
 private const val tag = "NavigationStack"
 @Composable
@@ -49,7 +48,7 @@ fun NavigationStack() {
 
 		composable(NavigationScreen.PokemonDetail.route) { backStackEntry ->
 			Log.d(tag, "navigate to " + NavigationScreen.PokemonDetail.route)
-			val id = backStackEntry.arguments?.getString(param_id)
+			val id = backStackEntry.arguments?.getString(NavigationScreen.PokemonDetail.param_id)
 
 			val viewModel = hiltViewModel<PokemonDetailViewModel>()
 			LaunchedEffect(Unit) { viewModel.getPokemonDetail(id.orEmpty()) }
