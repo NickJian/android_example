@@ -12,20 +12,19 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private val tag = "PokemonDetailViewModel"
 @HiltViewModel
 class PokemonDetailViewModel @Inject constructor(val pokemonDetailManager: PokemonDetailManager) :
 	ViewModel() {
 
-	private val _loadingState = MutableStateFlow<Boolean>(false)
+	private val _loadingState = MutableStateFlow<Boolean>(true)
 	val loadingState = _loadingState.asStateFlow<Boolean>()
-
 	private val _detailState = MutableStateFlow(PokemonUiDetailData("", "", "", "", "", "loading"))
 	val detailState = _detailState.asStateFlow()
 
-//	init {
-	// todo why crash?
-//		Log.d("TestViewModel", "init")
-//	}
+	init {
+		Log.d(tag, "init")
+	}
 
 	fun getPokemonDetail(id: String) {
 		_loadingState.value = true
@@ -33,12 +32,12 @@ class PokemonDetailViewModel @Inject constructor(val pokemonDetailManager: Pokem
 			val detail = pokemonDetailManager.getPokemonDetail(id)
 			_detailState.value = detail
 			_loadingState.value = false
-			// todo error handling
+
 		}
 	}
 
 	override fun onCleared() {
 		super.onCleared()
-		Log.d("TestViewModel", "onclear")
+		Log.d(tag, "onclear")
 	}
 }

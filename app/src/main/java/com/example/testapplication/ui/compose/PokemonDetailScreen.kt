@@ -1,5 +1,6 @@
 package com.example.testapplication.ui.compose
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,8 @@ import com.example.testapplication.ui.model.PokemonUiDetailData
 @Composable
 fun PokemonDetailScreen(data: State<PokemonUiDetailData>, isLoading: State<Boolean>) {
 	Scaffold { innerPadding ->
+
+		Log.d("PokemonDetailScreen", "recompose ${data.value}  ${isLoading.value}")
 		Box(Modifier.padding(10.dp)) {
 			Box(Modifier.padding(innerPadding)) {
 				if (isLoading.value) {

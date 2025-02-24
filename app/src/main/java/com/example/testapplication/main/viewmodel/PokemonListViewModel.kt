@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ListViewModel @Inject constructor(val photoListRepository: PhotoListRepository) :
+class PokemonListViewModel @Inject constructor(val photoListRepository: PhotoListRepository) :
 	ViewModel() {
 
 	private val _listScreenState = MutableStateFlow<ListScreenState>(ListScreenState.Loading)
@@ -24,9 +24,7 @@ class ListViewModel @Inject constructor(val photoListRepository: PhotoListReposi
 
 	init {
 		Log.d("ListViewModel", "init")
-		viewModelScope.launch {
-			getListViewDetail()
-		}
+
 	}
 
 	override fun onCleared() {
@@ -34,13 +32,16 @@ class ListViewModel @Inject constructor(val photoListRepository: PhotoListReposi
 		Log.d("ListViewModel", "onCleared")
 	}
 
-	private suspend fun getListViewDetail() {
+	fun getListViewDetail() {
+		viewModelScope.launch {
+			Log.d("ListViewModel", "getListViewDetail")
 		_listScreenState.value = ListScreenState.Loading
 		val result = withContext(Dispatchers.IO) { photoListRepository.getPhotoList() }
 		_listScreenState.value = when (result) {
 			is LoadPhotoResult.Success ->
 				ListScreenState.Success(result.photos)
 			is LoadPhotoResult.Error -> ListScreenState.Failed(result.message)
+		}
 		}
 	}
 
