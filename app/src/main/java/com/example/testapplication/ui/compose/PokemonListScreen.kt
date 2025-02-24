@@ -18,10 +18,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.testapplication.ui.model.ListScreenState
 import com.example.testapplication.ui.model.PokemonListItemData
+import rememberForeverLazyListState
+
+private const val tag = "PokemonListScreen"
 
 @Composable
 fun PokemonListScreen(state: State<ListScreenState>, onItemClick: (String) -> Unit) {
@@ -37,9 +39,10 @@ fun PokemonListScreen(state: State<ListScreenState>, onItemClick: (String) -> Un
 
 @Composable
 fun ItemListScreen(onItemClick: (String) -> Unit, imageList: List<PokemonListItemData>) {
+	val listState = rememberForeverLazyListState(tag)
 
 	LazyColumn(
-//		state = scrollState,
+		state = listState,
 		modifier = Modifier
 			.fillMaxWidth()
 	) {
@@ -77,14 +80,14 @@ private fun ListItemCard(
 @Preview(showBackground = true)
 fun PeviewListScreen() {
 	val mutableState = remember { mutableStateOf(ListScreenState.Success(preivewItemList)) }
-	PokemonListScreen(mutableState, rememberNavController())
+	PokemonListScreen(mutableState, { _ -> })
 }
 
 @Composable
 @Preview(showBackground = true)
 fun PreviewListScreenLoading() {
 	val mutableState = remember { mutableStateOf(ListScreenState.Loading) }
-	PokemonListScreen(mutableState, rememberNavController())
+	PokemonListScreen(mutableState, { _ -> })
 }
 
 private val preivewItemList = listOf(
