@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -44,7 +45,12 @@ fun PokemonDetailScreen(data: State<PokemonUiDetailData>, isLoading: State<Boole
 @Composable
 private fun DetailPokemonCard(data: State<PokemonUiDetailData>) {
 	Card {
-		Column(Modifier.padding(20.dp)) {
+		Column(
+			Modifier
+				.padding(20.dp)
+				.fillMaxWidth(),
+			horizontalAlignment = Alignment.CenterHorizontally
+		) {
 			Row(
 				verticalAlignment = Alignment.CenterVertically,
 				modifier = Modifier.padding(10.dp)
