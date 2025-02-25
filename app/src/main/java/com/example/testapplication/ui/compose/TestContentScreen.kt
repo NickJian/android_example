@@ -1,5 +1,6 @@
 package com.example.testapplication.ui.compose
 
+import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -23,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,19 +34,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.testapplication.R
+import com.example.testapplication.ui.compose.dialog.BaseAlertDialog
 
 @Composable
 @Preview(showBackground = true)
 fun TestContentScreen() {
 	var text by remember { mutableStateOf("Sample text") }
 	var visible by rememberSaveable { mutableStateOf(false) }
+	val showDialog = remember { mutableStateOf(false) }
 
 	Column(
 		Modifier
 			.verticalScroll(rememberScrollState())
 //			.padding(innerPadding)
 	) {
-
+		val context = LocalContext.current
 
 		Text(
 			text = "click to show more text",
@@ -61,9 +67,13 @@ fun TestContentScreen() {
 		)
 
 
-		Button(onClick = { text += "_" }, contentPadding = PaddingValues(20.dp)) {
+		Button(onClick = {
+			text += "_"
+			showDialog.value = true
+			Toast.makeText(context, "Button clicked", Toast.LENGTH_SHORT).show()
+		}, contentPadding = PaddingValues(20.dp)) {
 			Text("Click me")
-//                Toast.makeText(LocalContext.current, "Button clicked", Toast.LENGTH_SHORT).show()
+
 		}
 		Spacer(modifier = Modifier.height(10.dp))
 
@@ -104,9 +114,16 @@ fun TestContentScreen() {
 			)
 		}
 
-
+		if (showDialog.value) {
+			BaseAlertDialog({
+				showDialog.value = false
+			}, { showDialog.value = false }, "Title", "Text", icon = Icons.Default.Add)
+		}
 	}
 }
+
+
+
 
 
 
