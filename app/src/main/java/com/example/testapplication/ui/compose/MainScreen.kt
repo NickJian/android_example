@@ -7,9 +7,6 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -17,12 +14,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.testapplication.ui.navigation.NavigationScreen
+import com.example.testapplication.ui.navigation.BottomNavigationItem
 import com.example.testapplication.ui.navigation.NavigationStack
 
 @Composable
@@ -63,24 +61,20 @@ fun MainScreen() {
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-	val list = listOf(
-		NavigationScreen.MainPage to Icons.Default.Home,
-		NavigationScreen.PokemonListPage to Icons.Default.ShoppingCart,
-		NavigationScreen.BoxLayout to Icons.Default.PlayArrow,
-	)
+	val list = BottomNavigationItem.entries.toTypedArray()
 
 	BottomNavigation {
 		val navBackStackEntry = navController.currentBackStackEntryAsState()
 		val currentRoute = navBackStackEntry.value?.destination?.route
 
 		list.forEach { item ->
-//			val isSelected = derivedStateOf { currentRoute == item.first.route }
-			val isSelected = currentRoute == item.first.route
+			val isSelected = derivedStateOf { currentRoute == item.screen.route }
+//			val isSelected = currentRoute == item.first.route
 
 			BottomNavigationItem(
-				selected = isSelected,
+				selected = isSelected.value,
 				onClick = {
-					navController.navigate(item.first.route) {
+					navController.navigate(item.screen.route) {
 						navController.graph.startDestinationRoute?.let { screen_route ->
 							popUpTo(screen_route) {
 								saveState = true
@@ -91,7 +85,7 @@ fun BottomNavigationBar(navController: NavController) {
 					}
 				},
 				icon = {
-					Icon(item.second, contentDescription = item.first.route)
+					Icon(item.icon, contentDescription = item.label)
 				})
 		}
 	}
