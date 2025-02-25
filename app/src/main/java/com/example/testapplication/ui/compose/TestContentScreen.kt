@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -34,7 +33,7 @@ import com.example.testapplication.R
 
 @Composable
 @Preview(showBackground = true)
-fun MainScreenContent() {
+fun TestContentScreen() {
 	var text by remember { mutableStateOf("Sample text") }
 	var visible by rememberSaveable { mutableStateOf(false) }
 

@@ -5,29 +5,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.testapplication.main.viewmodel.PokemonDetailViewModel
 import com.example.testapplication.main.viewmodel.PokemonListViewModel
 import com.example.testapplication.main.viewmodel.TestViewModel
 import com.example.testapplication.ui.compose.BoxLayout
-import com.example.testapplication.ui.compose.MainScreen
 import com.example.testapplication.ui.compose.PokemonDetailScreen
 import com.example.testapplication.ui.compose.PokemonListScreen
+import com.example.testapplication.ui.compose.TestContentScreen
 
 private const val tag = "NavigationStack"
 @Composable
-fun NavigationStack() {
-
-	val navigationController = rememberNavController()
+fun NavigationStack(navigationController: NavHostController) {
 
 	NavHost(
 		navController = navigationController,
 		startDestination = NavigationScreen.MainPage.route
 	) {
 		composable(NavigationScreen.MainPage.route) {
-			MainScreen(navigationController)
+			TestContentScreen()
 		}
 		composable(NavigationScreen.PokemonListPage.route) {
 			Log.d(tag, "navigate to " + NavigationScreen.PokemonListPage.route)

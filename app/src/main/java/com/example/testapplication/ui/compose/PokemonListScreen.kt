@@ -2,12 +2,10 @@ package com.example.testapplication.ui.compose
 
 import android.util.Log
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -27,14 +25,13 @@ private const val tag = "PokemonListScreen"
 
 @Composable
 fun PokemonListScreen(state: State<ListScreenState>, onItemClick: (String) -> Unit) {
-	Box(Modifier.statusBarsPadding()) {
-		Log.d("listScreen", "recompose ${state.value}")
+
+	Log.d("listScreen", "recompose ${state.value}")
 		when (val screenState = state.value) {
 			is ListScreenState.Failed -> Text("Error" + screenState.message)
 			is ListScreenState.Loading -> Text("loading")
 			is ListScreenState.Success -> ItemListScreen(onItemClick, screenState.imageList)
 		}
-	}
 }
 
 @Composable
