@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -56,7 +57,7 @@ fun NavigationStack(navigationController: NavHostController) {
 			LaunchedEffect(Unit) { viewModel.getPokemonDetail(id.orEmpty()) }
 
 			PokemonDetailScreen(
-				viewModel.detailState.collectAsState(),
+				viewModel.detailState.collectAsStateWithLifecycle(),
 				viewModel.loadingState.collectAsState()
 			)
 		}

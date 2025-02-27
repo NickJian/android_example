@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(val photoListRepository: PhotoListRepository) :
 	ViewModel() {
@@ -24,7 +23,6 @@ class PokemonListViewModel @Inject constructor(val photoListRepository: PhotoLis
 
 	init {
 		Log.d("ListViewModel", "init")
-
 	}
 
 	override fun onCleared() {
@@ -35,14 +33,12 @@ class PokemonListViewModel @Inject constructor(val photoListRepository: PhotoLis
 	fun getListViewDetail() {
 		viewModelScope.launch {
 			Log.d("ListViewModel", "getListViewDetail")
-		_listScreenState.value = ListScreenState.Loading
-		val result = withContext(Dispatchers.IO) { photoListRepository.getPhotoList() }
-		_listScreenState.value = when (result) {
-			is LoadPhotoResult.Success ->
-				ListScreenState.Success(result.photos)
-			is LoadPhotoResult.Error -> ListScreenState.Failed(result.message)
-		}
+			_listScreenState.value = ListScreenState.Loading
+			val result = withContext(Dispatchers.IO) { photoListRepository.getPhotoList() }
+			_listScreenState.value = when (result) {
+				is LoadPhotoResult.Success -> ListScreenState.Success(result.photos)
+				is LoadPhotoResult.Error -> ListScreenState.Failed(result.message)
+			}
 		}
 	}
-
 }
