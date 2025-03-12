@@ -5,6 +5,8 @@ import com.example.testapplication.api.model.PokemonDetailSprites
 import com.example.testapplication.api.model.PokemonItemData
 import com.example.testapplication.api.model.PokemonListResult
 import com.example.testapplication.api.pokemon.PokemonDataSource
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -20,15 +22,15 @@ class PhotoListRepositoryImplTest {
 	}
 
 	@Test
-	fun `return correct photo list when api successed`() =
+	fun `return correct photo list when api success`() =
 		runTest {
 			val result = repository.getPhotoList()
-			assert(result is LoadPhotoResult.Success)
+			assert(result is LoadPhotoResult.Success) { "result is $result" }
 
 			result as LoadPhotoResult.Success
 			assert(result.photos.size == 2)
-			assertEquals("item1", { "incorrect photo name" }, result.photos[0].name)
-			assertEquals("item2", { "incorrect photo name" }, result.photos[1].name)
+			assertEquals("incorrect photo name", "item1", result.photos[0].name)
+			assertEquals("incorrect photo name", "item2", result.photos[1].name)
 
 		}
 
@@ -47,7 +49,7 @@ class FakePokemonDataSource : PokemonDataSource {
 		count = 200,
 		next = "next",
 		previous = "prev",
-		results = listOf(PokemonItemData("item1", "url"), PokemonItemData("item2", "url"))
+		results = listOf(PokemonItemData("item1", "url/1"), PokemonItemData("item2", "url/2"))
 	)
 
 	var shouldFail = false

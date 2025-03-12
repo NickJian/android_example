@@ -79,5 +79,18 @@ dependencies {
 	implementation(libs.androidx.hilt.navigation.compose)
 	implementation(libs.androidx.material)
 
+	// testing
+	// Required -- JUnit 4 framework
+	testImplementation(libs.junit.v413)
+	// Optional -- Robolectric environment
+	testImplementation(libs.core.ktx)
+	testImplementation(libs.androidx.core)
+	// Optional -- Mockito framework
+	testImplementation(libs.mockito.core)
+	// Optional -- mockito-kotlin
+	testImplementation(libs.mockito.kotlin)
+	// Optional -- Mockk framework
+	testImplementation(libs.mockk)
+	testImplementation(libs.kotlinx.coroutines.test)
 }
 
